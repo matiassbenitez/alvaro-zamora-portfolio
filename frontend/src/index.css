@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-yellow: #ffd100;
+  --color-brand-black: #0d0d0d;
+  --color-brand-bone: #f4f3ef;
+  --color-brand-gray: #8a8a8a;
+  --color-brand-orange: #f26a21;
+  --color-brand-line: #e4e2db;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-brand-bone text-brand-black font-sans antialiased;
+}
+
+::selection {
+  background: var(--color-brand-yellow);
+  color: var(--color-brand-black);
+}
+
+@layer components {
+  .input-base {
+    @apply w-full rounded-none border border-brand-line bg-white px-4 py-3 text-sm text-brand-black
+      outline-none transition placeholder:text-brand-gray focus:border-brand-black;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-brand-yellow px-6 py-3 font-display text-sm
+      font-semibold uppercase tracking-wider text-brand-black transition hover:bg-brand-black hover:text-brand-yellow;
+  }
+  .btn-dark {
+    @apply inline-flex items-center justify-center gap-2 bg-brand-black px-6 py-3 font-display text-sm
+      font-semibold uppercase tracking-wider text-white transition hover:bg-brand-yellow hover:text-brand-black;
+  }
+  .label-xs {
+    @apply font-display text-[11px] font-semibold uppercase tracking-[0.25em] text-brand-gray;
+  }
+}
