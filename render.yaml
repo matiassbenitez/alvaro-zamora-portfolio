@@ -46,7 +46,7 @@ services:
 
   # Frontend: SPA React servida por nginx, que hace proxy de /api y /uploads al backend
   - type: web
-    name: portfolio-frontend
+    name: portfolio-backend
     runtime: docker
     dockerfilePath: ./frontend/Dockerfile
     dockerContext: ./frontend
@@ -60,7 +60,7 @@ services:
           envVarKey: RENDER_EXTERNAL_URL
 
   # PostgreSQL gestionado por Render (los datos se conservan entre deploys)
-  - type: postgres
-    name: portfolio-db
-    plan: free
+  - name: portfolio-db
     databaseName: portfolio
+    user: portfolio
+    plan: free
