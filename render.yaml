@@ -1,3 +1,10 @@
+databases:
+  # PostgreSQL gestionado por Render
+  - name: portfolio-db
+    databaseName: portfolio
+    user: portfolio
+    plan: free
+
 services:
   # Backend: API Spring Boot (Docker)
   - type: web
@@ -55,10 +62,3 @@ services:
           name: portfolio-backend
           type: web
           envVarKey: RENDER_EXTERNAL_URL
-
-  # PostgreSQL gestionado por Render
-  - type: postgres
-    name: portfolio-db
-    databaseName: portfolio
-    user: portfolio
-    plan: free
