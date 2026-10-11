@@ -33,34 +33,32 @@ services:
         generateValue: true
       - key: JWT_EXPIRATION_MINUTES
         value: "720"
-      # Pon aquí tus valores tras crear el servicio:
       - key: ADMIN_USERNAME
         sync: false
       - key: ADMIN_PASSWORD
         sync: false
-      # URL del frontend, p. ej. https://portfolio-frontend-xxxx.onrender.com
       - key: CORS_ALLOWED_ORIGINS
         sync: false
       - key: UPLOAD_DIR
         value: /data/uploads
 
-  # Frontend: SPA React servida por nginx, que hace proxy de /api y /uploads al backend
+  # Frontend: SPA React servida por nginx
   - type: web
-    name: portfolio-backend
+    name: portfolio-frontend
     runtime: docker
     dockerfilePath: ./frontend/Dockerfile
     dockerContext: ./frontend
     plan: free
     envVars:
-      # Render inyecta PORT (10000) y RENDER_EXTERNAL_URL automáticamente
       - key: BACKEND_URL
         fromService:
           name: portfolio-backend
           type: web
           envVarKey: RENDER_EXTERNAL_URL
 
-  # PostgreSQL gestionado por Render (los datos se conservan entre deploys)
-  - name: portfolio-db
+  # PostgreSQL gestionado por Render
+  - type: postgres
+    name: portfolio-db
     databaseName: portfolio
     user: portfolio
     plan: free
