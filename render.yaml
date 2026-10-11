@@ -1,0 +1,66 @@
+services:
+  # Backend: API Spring Boot (Docker)
+  - type: web
+    name: portfolio-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: portfolio-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: portfolio-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: portfolio-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: portfolio-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: portfolio-db
+          property: password
+      - key: DB_SSLMODE
+        value: require
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION_MINUTES
+        value: "720"
+      # Pon aquí tus valores tras crear el servicio:
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      # URL del frontend, p. ej. https://portfolio-frontend-xxxx.onrender.com
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+      - key: UPLOAD_DIR
+        value: /data/uploads
+
+  # Frontend: SPA React servida por nginx, que hace proxy de /api y /uploads al backend
+  - type: web
+    name: portfolio-frontend
+    runtime: docker
+    dockerfilePath: ./frontend/Dockerfile
+    dockerContext: ./frontend
+    plan: free
+    envVars:
+      # Render inyecta PORT (10000) y RENDER_EXTERNAL_URL automáticamente
+      - key: BACKEND_URL
+        fromService:
+          name: portfolio-backend
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+
+  # PostgreSQL gestionado por Render (los datos se conservan entre deploys)
+  - type: postgres
+    name: portfolio-db
+    plan: free
+    databaseName: portfolio

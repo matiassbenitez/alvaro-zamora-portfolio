@@ -80,11 +80,38 @@ Copia `.env.example` a `.env`. Todas tienen valor por defecto, pero conviene def
 
 ---
 
+## Despliegue en Render
+
+El repo incluye `render.yaml` (blueprint) con tres servicios:
+
+| Servicio | Tipo | Contenido |
+|---|---|---|
+| `portfolio-frontend` | Web (Docker) | `frontend/Dockerfile`, nginx con proxy de `/api` y `/uploads` a `${BACKEND_URL}` |
+| `portfolio-backend` | Web (Docker) | `backend/Dockerfile`, escucha en `${PORT}` (10000 en Render) |
+| `portfolio-db` | PostgreSQL gestionado | datos persistentes; el backend recibe `DB_HOST/DB_PORT/DB_NAME/DB_USER/DB_PASSWORD` y `DB_SSLMODE=require` |
+
+Pasos:
+
+1. Sube el repo a GitHub.
+2. En Render: **New → Blueprint** → selecciona el repo (lee `render.yaml`).
+3. Tras el primer deploy, en las env vars del backend completa `CORS_ALLOWED_ORIGINS`
+   (con la URL del frontend) y revisa `ADMIN_USERNAME` / `ADMIN_PASSWORD`.
+4. El frontend obtiene `BACKEND_URL` automáticamente desde `RENDER_EXTERNAL_URL` del backend.
+
+Notas:
+
+- El plan free duerme los servicios tras inactividad: la primera petición tarda ~30 s.
+- El Postgres free de Render expira a los 90 días.
+- `/uploads` es efímero en Render: las imágenes subidas se borran en cada deploy.
+
+---
+
 ## Estructura
 
 ```
 portfolio2/
-├── docker-compose.yml      # servicios db / backend / frontend
+├── docker-compose.yml      # servicios db / backend / frontend (local)
+├── render.yaml             # blueprint de Render: frontend + backend + Postgres
 ├── .env.example            # plantilla de variables de entorno
 ├── memory.md · plan.md     # contexto y plan de trabajo del proyecto
 ├── backend/
@@ -106,7 +133,7 @@ portfolio2/
 │           └── seed/           # imágenes de demo copiadas a /data/uploads
 └── frontend/
     ├── Dockerfile          # node build → nginx:alpine
-    ├── nginx.conf          # proxy /api y /uploads + SPA fallback
+    ├── nginx.conf.template  # proxy /api y /uploads + SPA fallback (envsubst)
     └── src/
         ├── api/client.js       # axios + interceptor JWT + apiErrorMessage
         ├── auth/               # AuthContext + RequireAuth
