@@ -41,3 +41,234 @@ body {
     @apply font-display text-[11px] font-semibold uppercase tracking-[0.25em] text-brand-gray;
   }
 }
+
+/* ===== Animaciones de la sección Proyectos (Fase 6) =====
+   Reglas: movimiento dentro de la caja del icono, sombra amarilla fija,
+   duraciones largas y escalonadas (--cat-delay) para sincronía ambiental suave. */
+
+.cat-icon {
+  transition: transform 0.3s ease-out;
+}
+
+/* Intensificación sutil al interactuar: escala del contenedor, sin tocar las keyframes
+   (evita saltos de fase en las animaciones en curso). */
+.group:hover .cat-icon {
+  transform: scale(1.06);
+}
+
+/* --- 01 Branding: balanceo de identificación + profundidad de la sombra --- */
+.cat-icon--branding .cat-body {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cat-tag-id 5.5s ease-in-out infinite;
+  animation-delay: var(--cat-delay, 0s);
+}
+.cat-icon--branding .cat-shadow {
+  animation: cat-tag-shadow 5.5s ease-in-out infinite;
+  animation-delay: var(--cat-delay, 0s);
+}
+
+@keyframes cat-tag-id {
+  0% { transform: rotate(0deg) translateY(0); }
+  20% { transform: rotate(-7deg) translateY(-2px); }
+  45% { transform: rotate(5deg) translateY(1px); }
+  70% { transform: rotate(-3deg) translateY(-1px); }
+  100% { transform: rotate(0deg) translateY(0); }
+}
+@keyframes cat-tag-shadow {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3px, 3px); }
+  45% { transform: translate(2px, -1px); }
+  70% { transform: translate(-1px, 2px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* --- 02 Editorial: apertura del pliego + líneas que se revelan en secuencia --- */
+.cat-icon--editorial .cat-open {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: cat-doc-open 5.5s ease-in-out infinite;
+  animation-delay: var(--cat-delay, 0s);
+}
+.cat-icon--editorial .cat-shadow {
+  animation: cat-doc-shadow 5.5s ease-in-out infinite;
+  animation-delay: var(--cat-delay, 0s);
+}
+.cat-icon--editorial .cat-line {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 0;
+  animation: cat-line-draw 5.5s ease-in-out infinite;
+  animation-delay: var(--cat-delay, 0s);
+}
+.cat-icon--editorial .cat-line-2 {
+  animation-delay: calc(var(--cat-delay, 0s) + 0.12s);
+}
+.cat-icon--editorial .cat-line-3 {
+  animation-delay: calc(var(--cat-delay, 0s) + 0.24s);
+}
+
+@keyframes cat-doc-open {
+  0% { transform: scaleX(1); }
+  35% { transform: scaleX(1.05); }
+  70% { transform: scaleX(0.97); }
+  100% { transform: scaleX(1); }
+}
+@keyframes cat-doc-shadow {
+  0%, 100% { transform: translate(0, 0); }
+  40% { transform: translate(3px, 1px); }
+}
+@keyframes cat-line-draw {
+  0% { stroke-dashoffset: 24; }
+  30%, 70% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 24; }
+}
+
+/* --- 03 Infografía: crecimiento angular de la cuña + líneas en secuencia --- */
+.cat-icon--infografia .cat-wedge {
+  transform-box: view-box;
+  transform-origin: 38px 50px;
+  animation: cat-wedge-grow 6s ease-in-out infinite;
+  animation-delay: var(--cat-delay, 0s);
+}
+.cat-icon--infografia .cat-line {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 0;
+  animation: cat-line-draw 5.5s ease-in-out infinite;
+  animation-delay: var(--cat-delay, 0s);
+}
+.cat-icon--infografia .cat-line-2 {
+  animation-delay: calc(var(--cat-delay, 0s) + 0.12s);
+}
+.cat-icon--infografia .cat-line-3 {
+  animation-delay: calc(var(--cat-delay, 0s) + 0.24s);
+}
+
+@keyframes cat-wedge-grow {
+  0% { transform: rotate(-70deg); }
+  45%, 75% { transform: rotate(0deg); }
+  100% { transform: rotate(-70deg); }
+}
+
+/* --- 04 Audiovisual: apertura/cierre de la claqueta + guiño de "acción" --- */
+.cat-icon--audiovisual .cat-bar {
+  transform-box: view-box;
+  transform-origin: 22px 36px;
+  animation: cat-clapper-snap 4s ease-in-out infinite;
+  animation-delay: var(--cat-delay, 0s);
+}
+.cat-icon--audiovisual .cat-play {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cat-play-rec 4s ease-in-out infinite;
+  animation-delay: var(--cat-delay, 0s);
+}
+.cat-icon--audiovisual .cat-shadow {
+  animation: cat-clap-shadow 4s ease-in-out infinite;
+  animation-delay: var(--cat-delay, 0s);
+}
+
+@keyframes cat-clapper-snap {
+  0%, 10% { transform: rotate(0deg); }
+  30% { transform: rotate(-26deg); }
+  55% { transform: rotate(0deg); }
+  75% { transform: rotate(-12deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes cat-play-rec {
+  0%, 45% { transform: scale(1); opacity: 1; }
+  55% { transform: scale(1.16); opacity: 0.55; }
+  65% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes cat-clap-shadow {
+  0%, 10% { transform: translate(0, 0); }
+  30% { transform: translate(0, 2px); }
+  55% { transform: translate(0, 0); }
+}
+
+/* --- 05 Redes Sociales: vibración de notificación + pulso del corazón --- */
+.cat-icon--redes .cat-phone {
+  animation: cat-phone-vibe 4.5s ease-in-out infinite;
+  animation-delay: var(--cat-delay, 0s);
+}
+.cat-icon--redes .cat-heart {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cat-heart-like 4.5s ease-in-out infinite;
+  animation-delay: var(--cat-delay, 0s);
+}
+
+@keyframes cat-phone-vibe {
+  0%, 12% { transform: translateX(0); }
+  16% { transform: translateX(-2px); }
+  20% { transform: translateX(2px); }
+  24% { transform: translateX(-2px); }
+  28% { transform: translateX(1.5px); }
+  32% { transform: translateX(-1px); }
+  36%, 100% { transform: translateX(0); }
+}
+@keyframes cat-heart-like {
+  0%, 14% { transform: scale(1) translateY(0); }
+  20% { transform: scale(1.18) translateY(-2px); }
+  26% { transform: scale(1) translateY(0); }
+  32% { transform: scale(1.12) translateY(-1px); }
+  38%, 100% { transform: scale(1) translateY(0); }
+}
+
+/* ===== Fase 7: despliegue de las categorías al hacer hover (solo desktop) =====
+   La capa pasa de `lg:hidden` a `lg:absolute lg:inset-0` al hacer hover; al recibir
+   display, estas animaciones arrancan de cero (una sola pasada, delays escalonados
+   1→5 de izquierda a derecha). En móvil no aplica el media query. */
+
+@media (min-width: 1024px) {
+  .cat-deploy-layer > a {
+    animation: cat-deploy 0.4s ease-out both;
+  }
+  .cat-deploy-layer > a:nth-child(1) { animation-delay: 0s; }
+  .cat-deploy-layer > a:nth-child(2) { animation-delay: 0.08s; }
+  .cat-deploy-layer > a:nth-child(3) { animation-delay: 0.16s; }
+  .cat-deploy-layer > a:nth-child(4) { animation-delay: 0.24s; }
+  .cat-deploy-layer > a:nth-child(5) { animation-delay: 0.32s; }
+}
+
+@keyframes cat-deploy {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== Fase 8: guion que se forma de izquierda a derecha en cada hover =====
+   Cada tarjeta (`.opt-card` = panel amarillo + 3 opciones) forma su guion al
+   hacer hover sobre ella; al salir y re-entrar, la animación arranca de cero.
+   Base del guion: `h-0.5 w-6 bg-current origin-left` (clase `opt-dash` en el JSX). */
+
+.opt-card:hover .opt-dash {
+  animation: opt-dash-form 0.6s ease-out both;
+}
+
+@keyframes opt-dash-form {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cat-icon * {
+    animation: none !important;
+  }
+  .cat-icon,
+  .group:hover .cat-icon {
+    transform: none;
+    transition: none;
+  }
+  .cat-deploy-layer > a {
+    animation: none !important;
+  }
+  .opt-card:hover .opt-dash {
+    animation: none !important;
+  }
+}

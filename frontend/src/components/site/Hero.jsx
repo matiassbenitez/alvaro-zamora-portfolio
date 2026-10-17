@@ -1,6 +1,3 @@
-import { ArrowRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
-
 export default function Hero({ site }) {
   return (
     <section className="relative overflow-hidden bg-brand-bone">
@@ -17,14 +14,6 @@ export default function Hero({ site }) {
           <p className="mt-8 max-w-md whitespace-pre-line text-lg leading-relaxed text-brand-black/70">
             {site?.hero?.subtitle || 'Diseño gráfico y comunicación visual para marcas que quieren destacar.'}
           </p>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Link to="/proyectos" className="btn-primary">
-              Ver proyectos <ArrowRight size={16} />
-            </Link>
-            <a href="#contacto" className="btn-dark">
-              Trabajemos juntos
-            </a>
-          </div>
         </div>
 
         <div className="relative min-h-[420px] lg:min-h-[640px]">

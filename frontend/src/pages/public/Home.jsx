@@ -1,6 +1,6 @@
 import { useOutletContext, Link } from 'react-router-dom'
 import Hero from '../../components/site/Hero.jsx'
-import QuickCards from '../../components/site/QuickCards.jsx'
+import ProjectCategories from '../../components/site/ProjectCategories.jsx'
 import SectionHeading from '../../components/site/SectionHeading.jsx'
 import ProjectCard from '../../components/site/ProjectCard.jsx'
 import ContactForm from '../../components/site/ContactForm.jsx'
@@ -16,9 +16,9 @@ export default function Home() {
   return (
     <>
       <Hero site={site} />
-      <QuickCards />
+      <ProjectCategories />
 
-      <section id="proyectos" className="mx-auto max-w-7xl px-5 py-20 lg:px-10 lg:py-28">
+      <section className="mx-auto max-w-7xl px-5 py-20 lg:px-10 lg:py-28">
         <SectionHeading
           index="01 — Proyectos"
           title="Trabajos destacados"

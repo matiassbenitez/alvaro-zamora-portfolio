@@ -130,7 +130,7 @@ public class DataSeeder implements CommandLineRunner {
         Project p1 = Project.builder()
                 .title("Identidad Nébula")
                 .slug("identidad-nebula")
-                .category("Identidad")
+                .category("Branding")
                 .year(2025)
                 .description("Sistema de identidad visual completo para una marca de café de especialidad: "
                         + "logotipo, paleta, tipografía y aplicaciones.")
@@ -155,11 +155,12 @@ public class DataSeeder implements CommandLineRunner {
                 .build();
 
         Project p3 = Project.builder()
-                .title("Campaña Órbita")
-                .slug("campana-orbita")
-                .category("Dirección de arte")
+                .title("Informe Anual Órbita")
+                .slug("informe-anual-orbita")
+                .category("Infografía")
                 .year(2025)
-                .description("Dirección de arte y piezas gráficas para la campaña de lanzamiento de un producto tecnológico.")
+                .description("Infografía y visualización de datos para el informe anual de una "
+                        + "organización tecnológica: mapas, gráficos y diagramas.")
                 .coverImage(eye)
                 .featured(false)
                 .published(true)
@@ -168,11 +169,12 @@ public class DataSeeder implements CommandLineRunner {
                 .build();
 
         Project p4 = Project.builder()
-                .title("Web Estudio Lumen")
-                .slug("web-estudio-lumen")
-                .category("Digital")
+                .title("Reel Estudio Lumen")
+                .slug("reel-estudio-lumen")
+                .category("Audiovisual")
                 .year(2026)
-                .description("Diseño UI/UX y desarrollo del sitio de un estudio de fotografía.")
+                .description("Pieza audiovisual de presentación para un estudio de fotografía: "
+                        + "dirección de arte, montaje y diseño de grafismo en movimiento.")
                 .coverImage(mockup)
                 .featured(true)
                 .published(true)
@@ -180,7 +182,21 @@ public class DataSeeder implements CommandLineRunner {
                 .likeCount(0)
                 .build();
 
-        projectRepository.saveAll(List.of(p1, p2, p3, p4));
+        Project p5 = Project.builder()
+                .title("Campaña Conecta")
+                .slug("campana-conecta")
+                .category("Redes Sociales")
+                .year(2026)
+                .description("Contenido y plantillas para redes sociales de una marca de lifestyle: "
+                        + "feed, stories y piezas de engagement.")
+                .coverImage(eye)
+                .featured(false)
+                .published(true)
+                .sortOrder(5)
+                .likeCount(0)
+                .build();
+
+        projectRepository.saveAll(List.of(p1, p2, p3, p4, p5));
         log.info("Proyectos demo sembrados");
     }
 

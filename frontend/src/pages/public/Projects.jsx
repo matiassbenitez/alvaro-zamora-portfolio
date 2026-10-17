@@ -1,22 +1,29 @@
-import { useMemo, useState } from 'react'
-import { useOutletContext } from 'react-router-dom'
+import { useMemo } from 'react'
+import { useOutletContext, useSearchParams } from 'react-router-dom'
 import SectionHeading from '../../components/site/SectionHeading.jsx'
 import ProjectCard from '../../components/site/ProjectCard.jsx'
 import Spinner from '../../components/ui/Spinner.jsx'
 
 export default function Projects() {
   const { projects, loading } = useOutletContext()
-  const [category, setCategory] = useState('Todas')
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const categories = useMemo(() => {
     const set = new Set(projects.map((p) => p.category))
     return ['Todas', ...Array.from(set)]
   }, [projects])
 
+  const param = searchParams.get('categoria')
+  const category = !loading && param && categories.includes(param) ? param : 'Todas'
+
   const filtered = useMemo(
     () => (category === 'Todas' ? projects : projects.filter((p) => p.category === category)),
     [projects, category],
   )
+
+  function selectCategory(cat) {
+    setSearchParams(cat === 'Todas' ? {} : { categoria: cat })
+  }
 
   if (loading) return <Spinner full />
 
@@ -33,7 +40,7 @@ export default function Projects() {
           <button
             key={cat}
             type="button"
-            onClick={() => setCategory(cat)}
+            onClick={() => selectCategory(cat)}
             className={`border px-4 py-2 font-display text-xs font-semibold uppercase tracking-[0.18em] transition ${
               category === cat
                 ? 'border-brand-black bg-brand-black text-white'
